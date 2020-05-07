@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo videojuego</title>
+
+    <script>
+        function check(){
+            const titulo = document.getElementById("addTitulo");
+            const sinopsis = document.getElementById("addSinopsis");
+            const genero = document.getElementById("addGenero");
+            const pegi = document.getElementById("addPegi");
+            const caratula = document.getElementById("addCaratula");
+
+            return ( titulo.nodeValue.trim().length >0
+                && sinopsis.nodeValue.trim().length >0
+                && genero.nodeValue.trim().length >0
+                && pegi.nodeValue > 0
+                && caratula.nodeValue.length > 0)
+        }
+    </script>
+</head>
+<body>
+    <h2>Dar de alta un juego nuevo</h2>
+    <form id="formAddVideojuego"
+        method="post"
+        action="/videojuego/nuevo"
+          enctype="multipart/form-data"
+        onsubmit="return check()">
+
+        <div><label for="addTitulo">Titulo</label></div>
+        <div><input type="text" id="addTitulo" name="addTitulo"/></div>
+
+        <div><label for="addSinopsis">Sinopsis</label></div>
+        <div><input type="text" id="addSinopsis" name="addSinopsis"/></div>
+
+        <div><label for="addGenero">Género del videojuego</label></div>
+        <div>
+            <select id="addGenero" name="addGenero">
+                <option value="Accion">Accion</option>
+                <option value="Estrategia">Estrategia</option>
+                <option value="Plataformas">Plataformas</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+
+        <div><label for="addPegi">Código PEGI</label></div>
+        <div>
+            <select id="addPegi" name="addPegi">
+                <option value="3">PEGI 3</option>
+                <option value="7">PEGI 7</option>
+                <option value="12">PEGI 12</option>
+                <option value="16">PEGI 16</option>
+                <option value="18">PEGI 18</option>
+            </select>
+        </div>
+
+        <div><label for="addCaratula">Caratula</label></div>
+        <div><input type="file" id="addCaratula" name="addCaratula"/></div>
+
+        <input type="submit" value="enviar">
+    </form>
+</body>
+</html>
