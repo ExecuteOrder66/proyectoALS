@@ -1,0 +1,62 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+
+<h2>Modificación de un videojuego</h2>
+    <form id="formModVideojuego"
+        method="put"
+        action="/videojuego/modifica" 
+          enctype="multipart/form-data"
+        onsubmit="return check()">
+
+        <div><label for="modTitulo">Titulo</label></div>
+        <div><input type="text" id="modTitulo" name="modTitulo" value="{{videojuego.titulo}}"/></div>
+
+        <div><label for="modSinopsis">Sinopsis</label></div>
+        <div><textarea id="modSinopsis" name="modSinopsis" rows="2" cols="60">{{videojuego.sinopsis}}</textarea></div>
+        
+
+        <div><label for="modGenero">Género del videojuego</label></div>
+        <div>
+            <select id="modGenero" name="modGenero">
+                <option value="Accion">Accion</option>
+                <option value="Estrategia">Estrategia</option>
+                <option value="Plataformas">Plataformas</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+
+        <div><label for="modPegi">Código PEGI</label></div>
+        <div>
+            <select id="modPegi" name="modPegi">
+                <option value="3">PEGI 3</option>
+                <option value="7">PEGI 7</option>
+                <option value="12">PEGI 12</option>
+                <option value="16">PEGI 16</option>
+                <option value="18">PEGI 18</option>
+            </select>
+        </div>
+
+        <div><label for="modCaratula">Caratula</label></div>
+        <div><input type="file" id="modCaratula" name="modCaratula"/></div>
+
+        <input type="submit" value="enviar">
+    </form>
+
+
+<script>
+        function check(){
+            const titulo = document.getElementById("modTitulo");
+            const sinopsis = document.getElementById("modSinopsis");
+            const genero = document.getElementById("modGenero");
+            const pegi = document.getElementById("modPegi");
+            const caratula = document.getElementById("modCaratula");
+
+            return ( titulo.nodeValue.trim().length >0
+                && sinopsis.nodeValue.trim().length >0
+                && genero.nodeValue.trim().length >0
+                && pegi.nodeValue > 0
+                && caratula.nodeValue.length > 0)
+        }
+</script>
+{% endblock %}

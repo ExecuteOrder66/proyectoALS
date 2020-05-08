@@ -1,4 +1,4 @@
-#Nuevo videojuego
+#Modificar videojuego
 from time import sleep
 
 import webapp2
@@ -12,26 +12,24 @@ from model.videojuego import Genero
 from model.videojuego import Pegi
 
 
-class NuevoVideojuegoHandler(webapp2.RequestHandler):
+class ModificaVideojuegoHandler(webapp2.RequestHandler):
     def get(self):
-        videojuegos = Videojuego.query().order()
-
+        videojuego = Videojuego.recupera(self.request)
 
         valores_plantilla = {
-            "videojuegos": videojuegos
+            "videojuego": videojuego
         }
 
         jinja = jinja2.get_jinja2(app=self.app)
-        self.response.write(jinja.render_template("add_videojuego.html", **valores_plantilla))
+        self.response.write(jinja.render_template("modify_videojuego.html", **valores_plantilla))
 
-
-    def post(self):
+    def put(self):
         self.response.write("Formulario recibido, registrando videojuego")
-        titulo = self.request.get("addTitulo", "falta titulo")
-        sinopsis = self.request.get("addSinopsis", "")
-        str_genero = self.request.get("addGenero", "")
-        str_pegi = self.request.get("addPegi", "")
-        data_caratula = self.request.get("addCaratula", None)
+        titulo = self.request.get("modTitulo", "falta titulo")
+        sinopsis = self.request.get("modSinopsis", "")
+        str_genero = self.request.get("modGenero", "")
+        str_pegi = self.request.get("modPegi", "")
+        data_caratula = self.request.get("modCaratula", None)
 
         #DEFINE GENERO DEL JUEGO
         genero = Genero.get(str_genero)
@@ -61,5 +59,5 @@ class NuevoVideojuegoHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/videojuego/nuevo', NuevoVideojuegoHandler)
+    ('/videojuego/modifica', ModificaVideojuegoHandler)
 ], debug=True)

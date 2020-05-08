@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>TodoGames</title>
-</head>
-<body>
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+    <h2> Listado videojuegos (Todos)</h2>
     {% if videojuegos.count() > 0 %}
         {% for videojuego in videojuegos %}
-            (<a href="/videojuego/elimina?id={{videojuego.key.urlsafe()}}">del</a>)
+            (<a href="/videojuego/elimina?id={{videojuego.key.urlsafe()}}">elim</a>)
             (<a href="/videojuego/modifica?id={{videojuego.key.urlsafe()}}">mod</a>)
-            <b>{{videojuego.titulo}}</b>
-            <p>{{videojuego.sinopsis}}</p>
-            <p>{{videojuego.categoria}}</p>
-            <p>{{videojuego.pegi}}</p>
-            <img src="data:image/png;base64,{{videojuego.caratula.encode('base64')}}"/>
+
+            {% include "detail_videojuego.html" %}
 
         {% endfor %}
     {% else %}
         <p><b>No hay videojuegos registrados</b></p>
     {% endif %}
 
-    <a href="/videojuego/nuevo">Nuevo videojuego</a>
-</body>
-</html>
+    <p><a href="/videojuego/nuevo">Nuevo videojuego</a></p>
+
+{% endblock %}

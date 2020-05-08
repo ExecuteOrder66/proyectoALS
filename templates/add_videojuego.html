@@ -1,26 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Nuevo videojuego</title>
+{% extends "esqueleto.html" %}
 
-    <script>
-        function check(){
-            const titulo = document.getElementById("addTitulo");
-            const sinopsis = document.getElementById("addSinopsis");
-            const genero = document.getElementById("addGenero");
-            const pegi = document.getElementById("addPegi");
-            const caratula = document.getElementById("addCaratula");
-
-            return ( titulo.nodeValue.trim().length >0
-                && sinopsis.nodeValue.trim().length >0
-                && genero.nodeValue.trim().length >0
-                && pegi.nodeValue > 0
-                && caratula.nodeValue.length > 0)
-        }
-    </script>
-</head>
-<body>
+{% block contenido %}
     <h2>Dar de alta un juego nuevo</h2>
     <form id="formAddVideojuego"
         method="post"
@@ -32,7 +12,8 @@
         <div><input type="text" id="addTitulo" name="addTitulo"/></div>
 
         <div><label for="addSinopsis">Sinopsis</label></div>
-        <div><input type="text" id="addSinopsis" name="addSinopsis"/></div>
+        <div><textarea id="addSinopsis" name="addSinopsis" rows="2" cols="60"></textarea></div>
+        
 
         <div><label for="addGenero">Género del videojuego</label></div>
         <div>
@@ -60,5 +41,22 @@
 
         <input type="submit" value="enviar">
     </form>
-</body>
-</html>
+
+
+<script>
+        function check(){
+            const titulo = document.getElementById("addTitulo");
+            const sinopsis = document.getElementById("addSinopsis");
+            const genero = document.getElementById("addGenero");
+            const pegi = document.getElementById("addPegi");
+            const caratula = document.getElementById("addCaratula");
+
+            return ( titulo.nodeValue.trim().length >0
+                && sinopsis.nodeValue.trim().length >0
+                && genero.nodeValue.trim().length >0
+                && pegi.nodeValue > 0
+                && caratula.nodeValue.length > 0)
+        }
+</script>
+
+{% endblock %}
