@@ -13,7 +13,7 @@
             <p>{{videojuego.sinopsis}}</p>
             <p>{{videojuego.categoria}}</p>
             <p>{{videojuego.pegi}}</p>
-            <img src="/img?img_id=videojuego.key.urlsafe()"/>
+            <img src="data:image/png;base64,{{videojuego.caratula.encode('base64')}}"/>
 
         {% endfor %}
     {% else %}

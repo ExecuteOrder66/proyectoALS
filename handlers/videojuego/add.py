@@ -3,8 +3,9 @@ from time import sleep
 
 import webapp2
 from google.appengine.api import images
+from PIL import Image
 from webapp2_extras import jinja2
-from model.videojuego import Videojuego
+
 
 from model.videojuego import Videojuego
 
@@ -28,7 +29,8 @@ class NuevoVideojuegoHandler(webapp2.RequestHandler):
         sinopsis = self.request.get("addSinopsis", "")
         str_genero = self.request.get("addGenero", "")
         str_pegi = self.request.get("addPegi", "")
-        caratula = self.request.get("addCaratula", "")
+        data_caratula = self.request.get("addCaratula", None)
+
 
         genero = str_genero
 
@@ -44,10 +46,11 @@ class NuevoVideojuegoHandler(webapp2.RequestHandler):
             pegi = -1
 
         #If comprobaciones, redirigir si algo va mal
-        if not(titulo) or not(sinopsis) or not(genero) or pegi<0 or not(caratula):
+        if not(titulo) or not(sinopsis) or not(genero) or pegi<0 or not(data_caratula):
             return self.redirect("/")
         else:
-            juego = Videojuego(titulo=titulo, sinopsis=sinopsis, genero=genero, pegi=pegi, caratula=caratula)
+            juego = Videojuego(titulo=titulo, sinopsis=sinopsis, genero=genero, pegi=pegi, caratula=data_caratula)
+            juego.caratula = images.resize(data_caratula, 220, 306)
             juego.put()
             sleep(1)
             return self.redirect("/")
