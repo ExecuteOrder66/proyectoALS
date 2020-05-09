@@ -1,7 +1,7 @@
 # Videojuego con su informacion
 
 from google.appengine.ext import ndb
-
+import inspect
 
 class Genero:
     ACCION = "ACCION"
@@ -53,10 +53,11 @@ class Videojuego(ndb.Model):
 
     @staticmethod
     def recupera(req):
+
         try:
             id = req.GET["id"]
         except KeyError:
             id=""
 
-        #Devuelve clave
+        print("Clave: {0}".format(id))
         return ndb.Key(urlsafe=id).get()

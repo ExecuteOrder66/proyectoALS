@@ -3,6 +3,6 @@
 from google.appengine.ext import ndb
 from videojuego import Videojuego
 
-class Lista(ndb.Model):
+class UserLike(ndb.Model):
     usr = ndb.StringProperty
     videojuego = ndb.KeyProperty(kind=Videojuego)

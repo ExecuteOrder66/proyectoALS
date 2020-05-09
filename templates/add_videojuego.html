@@ -1,47 +1,59 @@
 {% extends "esqueleto.html" %}
 
 {% block contenido %}
-    <h2>Dar de alta un juego nuevo</h2>
-    <form id="formAddVideojuego"
-        method="post"
-        action="/videojuego/nuevo"
-          enctype="multipart/form-data"
-        onsubmit="return check()">
+    <header class="jumbotron my-4">
+        <h2 class="display-3">Dar de alta un juego nuevo</h2>
+    </header>
 
-        <div><label for="addTitulo">Titulo</label></div>
-        <div><input type="text" id="addTitulo" name="addTitulo"/></div>
+    <div class="container">
+        <div class="row">
+            <form id="formAddVideojuego"
+                method="post"
+                action="/videojuego/nuevo"
+                  enctype="multipart/form-data"
+                onsubmit="return check()"
+                role="form" class="col-md-9 go-right">
 
-        <div><label for="addSinopsis">Sinopsis</label></div>
-        <div><textarea id="addSinopsis" name="addSinopsis" rows="2" cols="60"></textarea></div>
-        
+                <div class="form-group">
+                    <label for="addTitulo">Titulo</label>
+                    <input type="text" id="addTitulo" name="addTitulo" class="form-control"/>
+                </div>
 
-        <div><label for="addGenero">Género del videojuego</label></div>
-        <div>
-            <select id="addGenero" name="addGenero">
-                <option value="Accion">Accion</option>
-                <option value="Estrategia">Estrategia</option>
-                <option value="Plataformas">Plataformas</option>
-                <option value="Otro">Otro</option>
-            </select>
+                 <div class="form-group">
+                    <label for="addSinopsis">Sinopsis</label>
+                    <textarea id="addSinopsis" name="addSinopsis" rows="2" cols="60" class="form-control"></textarea>
+                 </div>
+
+                <div class="form-group">
+                    <label for="addGenero">Género del videojuego</label>
+                    <select id="addGenero" name="addGenero" class="form-control">
+                        <option value="Accion">Accion</option>
+                        <option value="Estrategia">Estrategia</option>
+                        <option value="Plataformas">Plataformas</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="addPegi">Código PEGI</label>
+                    <select id="addPegi" name="addPegi" class="form-control">
+                        <option value="3">PEGI 3</option>
+                        <option value="7">PEGI 7</option>
+                        <option value="12">PEGI 12</option>
+                        <option value="16">PEGI 16</option>
+                        <option value="18">PEGI 18</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="addCaratula">Caratula</label>
+                    <input type="file" id="addCaratula" name="addCaratula" class="form-control"/>
+                </div>
+
+            <input type="submit" value="Enviar" class="btn btn-primary btn-lg">
+        </form>
         </div>
-
-        <div><label for="addPegi">Código PEGI</label></div>
-        <div>
-            <select id="addPegi" name="addPegi">
-                <option value="3">PEGI 3</option>
-                <option value="7">PEGI 7</option>
-                <option value="12">PEGI 12</option>
-                <option value="16">PEGI 16</option>
-                <option value="18">PEGI 18</option>
-            </select>
-        </div>
-
-        <div><label for="addCaratula">Caratula</label></div>
-        <div><input type="file" id="addCaratula" name="addCaratula"/></div>
-
-        <input type="submit" value="enviar">
-    </form>
-
+    </div>
 
 <script>
         function check(){

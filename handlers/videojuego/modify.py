@@ -14,6 +14,7 @@ from model.videojuego import Pegi
 
 class ModificaVideojuegoHandler(webapp2.RequestHandler):
     def get(self):
+        print("----------GET MODIFY-----------")
         videojuego = Videojuego.recupera(self.request)
 
         valores_plantilla = {
@@ -23,8 +24,8 @@ class ModificaVideojuegoHandler(webapp2.RequestHandler):
         jinja = jinja2.get_jinja2(app=self.app)
         self.response.write(jinja.render_template("modify_videojuego.html", **valores_plantilla))
 
-    def put(self):
-        self.response.write("Formulario recibido, registrando videojuego")
+    def post(self):
+        print("-------------PUT MODIFY-----------")
         titulo = self.request.get("modTitulo", "falta titulo")
         sinopsis = self.request.get("modSinopsis", "")
         str_genero = self.request.get("modGenero", "")
@@ -46,12 +47,23 @@ class ModificaVideojuegoHandler(webapp2.RequestHandler):
         except ValueError:
             pegi = -1
 
+        print("WEA+++++++++++++++")
         #If comprobaciones, redirigir si algo va mal
-        if not(titulo) or not(sinopsis) or not(genero) or pegi<0 or not(data_caratula):
+        if not(titulo) or not(sinopsis) or not(genero) or pegi<0:
+            print("ALGO VACIO")
             return self.redirect("/")
         else:
-            juego = Videojuego(titulo=titulo, sinopsis=sinopsis, genero=genero, pegi=pegi, caratula=data_caratula)
-            juego.caratula = images.resize(data_caratula, 220, 306)
+            print("**********MODIFICANDO****************")
+            juego = Videojuego.recupera(self.request)
+
+            if data_caratula:
+                juego.caratula = images.resize(data_caratula, 220, 306)
+
+            juego.titulo = titulo
+            juego.sinopsis = sinopsis
+            juego.genero = genero
+            juego.pegi = pegi
+
             juego.put()
             sleep(1)
             return self.redirect("/")

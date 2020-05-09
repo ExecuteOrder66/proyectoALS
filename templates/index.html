@@ -1,19 +1,27 @@
 {% extends "esqueleto.html" %}
 
 {% block contenido %}
-    <h2> Listado videojuegos (Todos)</h2>
+    <header class="jumbotron my-4">
+        <h2 class="display-3"> Listado de videojuegos (Todos)</h2>
+        <p><a href="/videojuego/nuevo" class="btn btn-primary btn-lg">Nuevo videojuego</a></p>
+    </header>
+
     {% if videojuegos.count() > 0 %}
+
+    <div class="row text-center">
+
         {% for videojuego in videojuegos %}
-            (<a href="/videojuego/elimina?id={{videojuego.key.urlsafe()}}">elim</a>)
-            (<a href="/videojuego/modifica?id={{videojuego.key.urlsafe()}}">mod</a>)
 
             {% include "detail_videojuego.html" %}
 
+
         {% endfor %}
+
+    </div>
     {% else %}
         <p><b>No hay videojuegos registrados</b></p>
     {% endif %}
 
-    <p><a href="/videojuego/nuevo">Nuevo videojuego</a></p>
+
 
 {% endblock %}
