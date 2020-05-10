@@ -28,6 +28,14 @@ handlers:
   script: handlers.videojuego.modify.app
   login: required
 
+- url: /like/modifica
+  script: handlers.userlike.add_modify.app
+  login: required
+
+- url: /like/lista
+  script: handlers.userlike.show_all.app
+  login: required
+
 libraries:
 - name: webapp2
   version: "2.5.2"

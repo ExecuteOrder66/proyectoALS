@@ -46,10 +46,9 @@ class Videojuego(ndb.Model):
     titulo = ndb.StringProperty(indexed=True)
     sinopsis = ndb.TextProperty(required=True)
     genero = ndb.StringProperty(required=True)
-    #genero = Enum(["ACCION","ESTRATEGIA","PLATAFORMAS","OTRO"])
-    #genero = Genero()
     pegi = ndb.IntegerProperty(required=True)
     caratula = ndb.BlobProperty(required=True)
+    usr_email = ndb.StringProperty(required=True)
 
     @staticmethod
     def recupera(req):
@@ -59,5 +58,4 @@ class Videojuego(ndb.Model):
         except KeyError:
             id=""
 
-        print("Clave: {0}".format(id))
         return ndb.Key(urlsafe=id).get()

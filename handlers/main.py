@@ -17,35 +17,50 @@
 import webapp2
 from google.appengine.ext import ndb
 from webapp2_extras import jinja2
+from webapp2_extras.users import users
 
 from model.videojuego import Videojuego
+import model.user as user_model
+import model.userlike as like_model
 
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        usr = users.get_current_user()
+        user = user_model.retrieve(usr)
+
+        if usr and user:
+            usr_url = users.create_logout_url("/")
+        else:
+            user = user_model.create_empty_user()
+            user.nick = "Login"
+
+            usr_url = users.create_login_url("/")
+
         videojuegos = Videojuego.query().order()
 
+        juegos_like = like_model.get_juegos_like(user.email)
+        juegos_key_list = []
+        for juego in juegos_like:
+            juegos_key_list.append(juego.videojuego.urlsafe())
+
+        print("juegos_key_list= {0}".format(juegos_key_list))
 
         valores_plantilla = {
-            "videojuegos": videojuegos
+            "videojuegos": videojuegos,
+            "juegos_key_list": juegos_key_list,
+            "usr": usr,
+            "usr_url": usr_url,
+            "user": user
         }
 
         jinja = jinja2.get_jinja2(app=self.app)
         self.response.write(jinja.render_template("index.html", **valores_plantilla))
 
 
-class Image(webapp2.RequestHandler):
-    def get(self):
-        videojuego_key = ndb.Key(urlsafe=self.request.get('img_id'))
-        videojuego = videojuego_key.get()
-        if videojuego.caratula:
-            self.response.headers['Content-Type'] = 'image/png'
-            self.response.out.write(videojuego.caratula)
-        else:
-            self.response.out.write('No image')
+
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/img', Image)
 ], debug=True)

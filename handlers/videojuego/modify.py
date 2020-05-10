@@ -3,7 +3,7 @@ from time import sleep
 
 import webapp2
 from google.appengine.api import images
-from PIL import Image
+from webapp2_extras.users import users
 from webapp2_extras import jinja2
 
 
@@ -14,15 +14,21 @@ from model.videojuego import Pegi
 
 class ModificaVideojuegoHandler(webapp2.RequestHandler):
     def get(self):
-        print("----------GET MODIFY-----------")
-        videojuego = Videojuego.recupera(self.request)
+        usr = users.get_current_user()
 
-        valores_plantilla = {
-            "videojuego": videojuego
-        }
+        if usr:
+            videojuego = Videojuego.recupera(self.request)
 
-        jinja = jinja2.get_jinja2(app=self.app)
-        self.response.write(jinja.render_template("modify_videojuego.html", **valores_plantilla))
+            valores_plantilla = {
+                "videojuego": videojuego
+            }
+
+            jinja = jinja2.get_jinja2(app=self.app)
+            self.response.write(jinja.render_template("modify_videojuego.html", **valores_plantilla))
+        else:
+            print("No esta loggeado en modify")
+            return self.redirect("/")
+
 
     def post(self):
         print("-------------PUT MODIFY-----------")

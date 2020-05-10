@@ -3,7 +3,12 @@
 {% block contenido %}
     <header class="jumbotron my-4">
         <h2 class="display-3"> Listado de videojuegos (Todos)</h2>
-        <p><a href="/videojuego/nuevo" class="btn btn-primary btn-lg">Nuevo videojuego</a></p>
+        {% if usr %}
+            <p><a href="/videojuego/nuevo" class="btn btn-primary btn-lg">Nuevo videojuego</a></p>
+        {% else %}
+            <a class="nav-link btn btn-info" href="{{usr_url}}">Únete para añadir juegos</a>
+        {% endif %}
+
     </header>
 
     {% if videojuegos.count() > 0 %}

@@ -1,0 +1,20 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+    <header class="jumbotron my-4">
+        <h2 class="display-3"> Listado de tus juegos favoritos</h2>
+    </header>
+
+    {% if keys_fav|length > 0 %}
+        <div class="row text-center">
+            {% for videojuego in videojuegos %}
+
+                {% if videojuego.key.urlsafe() in keys_fav %}
+                    {% include "detail_like.html" %}
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

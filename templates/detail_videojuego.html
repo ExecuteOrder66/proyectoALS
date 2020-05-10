@@ -9,12 +9,27 @@
             <p>{{videojuego.categoria}}</p>
             <p>PEGI {{videojuego.pegi}}</p>
 
+            {% if videojuego.usr_email == user.email %}
             <a href="/videojuego/elimina?id={{videojuego.key.urlsafe()}}" class="btn btn-primary">
                 <i class="fas fa-trash-alt"></i>
             </a>
             <a href="/videojuego/modifica?id={{videojuego.key.urlsafe()}}" class="btn btn-danger">
                 <i class="fas fa-pencil-alt"></i>
             </a>
+            {% endif %}
+
+            {% if juegos_key_list|length > 0 %}
+                    {% if videojuego.key.urlsafe() in juegos_key_list %}
+                        <a href="/like/modifica?id={{videojuego.key.urlsafe()}}" class="btn btn-danger">Quitar FAV</a>
+                    {% else %}
+                        <a href="/like/modifica?id={{videojuego.key.urlsafe()}}" class="btn btn-success">Dar FAV</a>
+                    {% endif %}
+                </form>
+            {% else %}
+                <a href="/like/modifica?id={{videojuego.key.urlsafe()}}" class="btn btn-success">Dar FAV</a>
+
+            {% endif %}
+
         </div>
 
     </div>
